@@ -1,29 +1,41 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const CustomerProfile = (props) => {
-    return(
-        <div>
-            <h2>{props.name}({props.id})</h2>
-        </div>
-    )
-}
 
-const CustomerInfo = (props) => {
-    return(
-        <div>
-            <p>{props.birthday}</p>
-            <p>{props.gender}</p>
-            <p>{props.job}</p>
-        </div>
-    )
-}
+const Tr = styled.tr`
+
+    border-bottom: 1px solid #dddddd;
+    &:hover {
+        background-color: #f3f3f3;
+    }
+`;
+
+const Td = styled.td`
+    padding: 12px 15px;
+`;
+
 
 const Customer = (props) => {
-    return(
-        <div>
-            <CustomerProfile id={props.id} name={props.name} />
-            <CustomerInfo birthday={props.birthday} gender={props.gender} job={props.job} />
-        </div>
+    return (
+
+        <Tr>
+            <Td>
+                {props.id}
+            </Td>
+            <Td>
+                {props.name}
+            </Td>
+            <Td>
+                {props.birthday}
+            </Td>
+            <Td>
+                {props.gender}
+            </Td>
+            <Td>
+                {props.job}
+            </Td>
+        </Tr>
+
     )
 }
 
