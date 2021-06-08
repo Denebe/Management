@@ -1,5 +1,5 @@
 {
-  "name": "ww",
+  "name": "management",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,17 +34,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "description": "고객 관리 프로젝트",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Denebe/Management.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Denebe/Management/issues"
-  },
-  "homepage": "https://github.com/Denebe/Management#readme"
+  }
 }
