@@ -1,5 +1,5 @@
 import React from 'react';
-import { post } from 'axios';
+import axios from 'axios';
 
 class CustomerAdd extends React.Component {
 
@@ -7,7 +7,6 @@ class CustomerAdd extends React.Component {
         super(props);
 
         this.state = {
-            file: null,
             userName: '',
             birthday: '',
             gender: '',
@@ -32,31 +31,30 @@ class CustomerAdd extends React.Component {
             gender:'',
             job:''
         })
+
+        window.location.reload();
     }
 
     handleValueChange(e) {
-        let nextState = {};
+        const nextState = {};
         nextState[e.target.name] = e.target.value;
         this.setState(nextState);
     }
 
 
     addCustomer() {
+        console.log(this.state.userName);
+
         const url = '/api/customers';
-        const formData = new FormData();
-
-        formData.append('NAME', this.state.userName)
-        formData.append('birthday', this.state.birthday)
-        formData.append('gender', this.state.gender)
-        formData.append('njob', this.state.job)
-
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
+        
+        const data = {
+            NAME: this.state.userName,
+            birthday: this.state.birthday,
+            gender: this.state.gender,
+            job: this.state.job
         }
 
-        return post(url, formData, config)
+        return axios.post(url, data)
     }
 
     render() {

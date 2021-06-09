@@ -30,4 +30,26 @@ app.get('/api/customers', (req, res) => {
     )
 });
 
+app.post('/api/customers', (req, res) => {
+
+  console.log(req.body);
+
+  const sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)';
+  
+  const name = req.body.NAME;
+
+  const birthday = req.body.birthday;
+
+  const gender = req.body.gender;
+
+  const job = req.body.job;
+
+  const params = [ name, birthday, gender, job ];
+
+  connection.query(sql, params,
+     (err, rows, fields) =>{
+        res.send(rows);
+      })
+});
+
 app.listen(port, () => console.log(`listening on port ${port}`));

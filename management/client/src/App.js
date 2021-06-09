@@ -68,7 +68,6 @@ class App extends Component {
                 return (
                   <Customer
                     key={info.id}
-                    
                     id={info.id}
                     name={info.NAME}
                     birthday={info.birthday}
