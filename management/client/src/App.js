@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Customer from './components/Customer';
+import CustomerAdd from './components/CustomerAdd';
 
 const GloblaStyle = createGlobalStyle`
   body{
@@ -78,6 +79,7 @@ class App extends Component {
               }) : ''}
           </tbody>
         </Table>
+        <CustomerAdd />
       </>
     );
   }
