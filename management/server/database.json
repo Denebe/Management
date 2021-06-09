@@ -1,0 +1,16 @@
+{
+
+    "host": "management.cnkioad5qeiq.us-east-2.rds.amazonaws.com",
+
+    "user":"user",
+
+    "password": "whtjdfo97",
+
+    "port": "3306",
+
+    "database": "CUSTOMER"
+
+}
+
+
+
