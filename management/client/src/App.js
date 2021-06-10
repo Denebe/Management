@@ -35,9 +35,30 @@ const Thead = styled.thead`
 
 class App extends Component {
 
-  //state초기화
-  state = {
-    customers: ''
+  constructor(props) {
+
+    super(props);
+
+    //state초기화
+    this.state = {
+      customers: '',
+      completed: 0
+    }
+
+    this.stateRefresh = this.stateRefresh.bind(this);
+
+  }
+
+
+  stateRefresh() {
+    this.setState({
+      customers: '',
+      completed: 0
+    });
+
+    this.callApi()
+      .then(res => this.setState({ customers: res }))
+      .catch(err => console.log(err));
   }
 
   //컴포넌트가 마운트된 직후 호출된다.
@@ -57,7 +78,7 @@ class App extends Component {
   }
   render() {
     return (
-      <>
+      <div>
         <GloblaStyle />
         <Table>
           <Thead>
@@ -67,25 +88,27 @@ class App extends Component {
               <td className="td">생년월일</td>
               <td className="td">성별</td>
               <td className="td">직업</td>
+              <td className="td">설정</td>
             </tr>
           </Thead>
           <tbody>
             {this.state.customers ? this.state.customers.map(info => {
-                return (
-                  <Customer
-                    key={info.id}
-                    id={info.id}
-                    name={info.NAME}
-                    birthday={info.birthday}
-                    gender={info.gender}
-                    job={info.job}
-                  />
-                )
-              }) : ''}
+              return (
+                <Customer
+                  stateRefresh = {this.stateRefresh}
+                  key={info.id}
+                  id={info.id}
+                  name={info.NAME}
+                  birthday={info.birthday}
+                  gender={info.gender}
+                  job={info.job}
+                />
+              )
+            }) : ''}
           </tbody>
         </Table>
-        <CustomerAdd />
-      </>
+        <CustomerAdd stateRefresh={this.stateRefresh} />
+      </div>
     );
   }
 }

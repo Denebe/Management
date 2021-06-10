@@ -27,21 +27,21 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-
 app.get('/api/customers', (req, res) => {
-    connection.query(
-      'SELECT * FROM CUSTOMER',
-      (err, rows, fields) => {
-        res.send(rows);
-      }
-    )
-});
+  connection.query(
+    'SELECT * FROM CUSTOMER WHERE isDeleted = 0',
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  )
+})
+
 
 app.post('/api/customers', (req, res) => {
 
   console.log(req.body);
 
-  const sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, now(), 0)';
   
   const name = req.body.NAME;
 
@@ -58,5 +58,18 @@ app.post('/api/customers', (req, res) => {
         res.send(rows);
       })
 });
+
+app.delete('/api/customers/:id' , (req, res) => {
+  const sql = 'UPDATE CUSTOMER SET isDeleted = 1 WHERE id = ?';
+  const params = [req.params.id];
+
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  )
+});
+
+
 
 app.listen(port, () => console.log(`listening on port ${port}`));

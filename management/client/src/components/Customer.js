@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CustomerDelete from './CustomerDelete';
 
 
 const Tr = styled.tr`
@@ -15,28 +16,35 @@ const Td = styled.td`
 `;
 
 
-const Customer = (props) => {
-    return (
+class Customer extends React.Component {
 
-        <Tr>
-            <Td>
-                {props.id}
-            </Td>
-            <Td>
-                {props.name}
-            </Td>
-            <Td>
-                {props.birthday}
-            </Td>
-            <Td>
-                {props.gender}
-            </Td>
-            <Td>
-                {props.job}
-            </Td>
-        </Tr>
+    render() {
 
-    )
+        return (
+
+            <Tr>
+                <Td>
+                    {this.props.id}
+                </Td>
+                <Td>
+                    {this.props.name}
+                </Td>
+                <Td>
+                    {this.props.birthday}
+                </Td>
+                <Td>
+                    {this.props.gender}
+                </Td>
+                <Td>
+                    {this.props.job}
+                </Td>
+                <Td>
+                    <CustomerDelete stateRefresh={this.props.stateRefresh} id={this.props.id} />
+                </Td>
+            </Tr>
+
+        )
+    }
 }
 
 
