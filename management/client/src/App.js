@@ -32,19 +32,25 @@ const Thead = styled.thead`
   }
 `;
 
+
 class App extends Component {
 
+  //state초기화
   state = {
     customers: ''
   }
 
+  //컴포넌트가 마운트된 직후 호출된다.
   componentDidMount() {
+    //callApi 호출
     this.callApi()
       .then(res => this.setState({ customers: res }))
       .catch(err => console.log(err));
   }
 
+  //async가 있어야 await 사용가능
   callApi = async () => {
+    //
     const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
