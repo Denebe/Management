@@ -27,6 +27,7 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+//Select 쿼리문을 사용해서 isdeleted컬럼이 0인것을 불러온다.
 app.get('/api/customers', (req, res) => {
   connection.query(
     'SELECT * FROM CUSTOMER WHERE isDeleted = 0',
@@ -36,7 +37,7 @@ app.get('/api/customers', (req, res) => {
   )
 })
 
-
+//post insert쿼리문을 사용해서 db에 각 데이터를 보낸다.
 app.post('/api/customers', (req, res) => {
 
   console.log(req.body);

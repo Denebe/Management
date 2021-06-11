@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -115,6 +116,7 @@ class CustomerAdd extends React.Component {
     //클래스 컴포넌트에서 반드시 구현돼야하는 메서드
     render() {
         const { classes } = this.props;
+        
         return (
 
             <div>
@@ -145,4 +147,4 @@ class CustomerAdd extends React.Component {
 
 }
 
-export default CustomerAdd;
+export default withStyles(styles)(CustomerAdd);
