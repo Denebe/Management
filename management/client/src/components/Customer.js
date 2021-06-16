@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CustomerDelete from './CustomerDelete';
-
+import CustomerUpdate from './CustomerUpdate';
 
 const Tr = styled.tr`
 
@@ -39,6 +39,11 @@ function Customer(props) {
             <Td>
                 <CustomerDelete stateRefresh={props.stateRefresh} id={props.id} />
             </Td>
+            
+            <Td>
+                <CustomerUpdate stateRefresh={props.stateRefresh} id={props.id} />
+            </Td>
+            
         </Tr>
 
     )

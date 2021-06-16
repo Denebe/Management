@@ -19,7 +19,7 @@ function CustomerDelete(props) {
         
         setOpen(false);
     }
-
+    // api들은 폴더로 관리
     const deleteCustomer = (id) => {
         const url = '/api/customers/' + id;
         fetch(url, {

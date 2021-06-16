@@ -37,6 +37,22 @@ app.get('/api/customers', (req, res) => {
   )
 })
 
+app.get('/api/customers/:id', (req, res) => {
+
+  const sql = 'SELECT * FROM CUSTOMER WHERE id = ?';
+
+  const params = [req.params.id];
+
+  console.log(params);
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+      console.log(rows);
+    }
+  )
+ 
+})
+
 //post insert쿼리문을 사용해서 db에 각 데이터를 보낸다.
 app.post('/api/customers', (req, res) => {
 
@@ -56,6 +72,10 @@ app.post('/api/customers', (req, res) => {
 
   connection.query(sql, params,
      (err, rows, fields) =>{
+      console.log("mysql callback");
+      console.log(err);
+      console.log(rows);
+      console.log(fields);
         res.send(rows);
       })
 });
@@ -76,6 +96,41 @@ app.delete('/api/customers/:id' , (req, res) => {
 
 });
 
+
+app.post('/api/customers/:id' , (req, res) => {
+  const sql = 'UPDATE management.CUSTOMER SET NAME = ?, birthday = ?, gender = ?, job = ?, createdDate = now(), isDeleted = 0 WHERE id = ?';
+  
+  const name = req.body.NAME;
+
+  const birthday = req.body.birthday;
+
+  const gender = req.body.gender;
+
+  const job = req.body.job;
+
+  const id = req.params.id;
+
+
+
+
+  const params = [ name, birthday, gender, job, id ];
+
+  console.log(params);
+
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      console.log("mysql callback");
+      console.log(err);
+      console.log(rows);
+      console.log(fields);
+
+      res.send(rows);
+    }
+  )
+
+  
+
+});
 
 
 

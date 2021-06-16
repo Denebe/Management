@@ -105,7 +105,7 @@ function Wow(props) {
     })
 
     const callApi = async () => {
-        //
+        // axios 써보기
         const response = await fetch('/api/customers');
         const body = await response.json();
         return body;
@@ -114,8 +114,7 @@ function Wow(props) {
 
     const stateRefresh = () => {
         setUser({
-            customers: '',
-            searchKeyword: ''
+            customers: ''
         });
 
         callApi()
