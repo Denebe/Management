@@ -18,45 +18,38 @@ function CustomerUpdate(props) {
 
     const [open, setOpen] = useState(false);
     //
-    const handleFormSubmit = (id) => {
+
+    const handleFormSubmit = (e) => {
+        //event를 인자로 받고 이벤트의 기본동작은 하지않고, this.addcustomer()이 수행된다.
+        e.preventDefault()
 
         //addCustomer함수호출
-        updateCustomer(id)
-            //then함수에 전달된 response
-            .then((response) => {
-                console.log(response.data);
-                props.stateRefresh();
-            })
-        //state값 초기화
-        setInfo({
-            userName: '',
-            birthday: '',
-            gender: '',
-            job: ''
-        })
+        updateCustomer()
 
         setOpen(false);
         //새로고침
         props.stateRefresh();
         //window.location.reload();
-
     }
 
-
-    const updateCustomer = (id) => {
-        console.log(info.userName);
+    const updateCustomer = () => {
+        
 
         //axios.post 구성 url, data
-        const url = '/api/customers/' + id;
+        const url = '/api/customers/';
 
         const data = {
+            id: props.id,
             NAME: info.userName,
             birthday: info.birthday,
             gender: info.gender,
             job: info.job
         }
+        console.log(data);
 
-        return axios.post(url, data)
+        return axios.put(url, data)
+
+        
     }
 
     const handleValueChange = e => {
@@ -69,26 +62,17 @@ function CustomerUpdate(props) {
            
     }
 
-    const handleClickOpen = (id) => {
+    const handleClickOpen = () => {
 
-        console.log(id);
-        const url = '/api/customers/' + id;
-        axios.get(url)
-            .then(function(response) {
-                const userData = response.data;
-
+        console.log(props.id);
+      
                 setInfo({
-                    userName: response.data[0].NAME,
-                    birthday: response.data[0].birthday,
-                    gender: response.data[0].gender,
-                    job: response.data[0].job
+                    userName: props.name,
+                    birthday: props.birthday,
+                    gender: props.gender,
+                    job: props.job
                 })
-                console.log("sucess");
-                console.log(userData);
-            })
-            .catch(function(error) {
-                console.log("fail");
-            })
+            
 
         setOpen(true);
     }
@@ -105,7 +89,7 @@ function CustomerUpdate(props) {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={(e) => handleClickOpen(props.id)}>
+            <Button variant="contained" color="primary" onClick={handleClickOpen}>
                 고객 수정하기
             </Button>
 
@@ -118,7 +102,7 @@ function CustomerUpdate(props) {
                     <TextField label="직업" type="text" name="job" value={info.job} onChange={handleValueChange} /><br />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" onClick={(e) => handleFormSubmit(props.id)}>수정</Button>
+                    <Button variant="contained" color="primary" onClick={handleFormSubmit}>수정</Button>
                     <Button variant="contained" color="primary" onClick={handleClose}>닫기</Button>
                 </DialogActions>
             </Dialog>

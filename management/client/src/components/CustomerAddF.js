@@ -36,12 +36,7 @@ function CustomerAddF(props) {
 
         //addCustomer함수호출
         addCustomer()
-            //then함수에 전달된 response
-            .then((response) => {
-                console.log(response.data);
-                props.stateRefresh();
-            })
-        //state값 초기화
+
         setInfo({
             userName: '',
             birthday: '',

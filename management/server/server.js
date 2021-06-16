@@ -37,22 +37,6 @@ app.get('/api/customers', (req, res) => {
   )
 })
 
-app.get('/api/customers/:id', (req, res) => {
-
-  const sql = 'SELECT * FROM CUSTOMER WHERE id = ?';
-
-  const params = [req.params.id];
-
-  console.log(params);
-  connection.query(sql, params,
-    (err, rows, fields) => {
-      res.send(rows);
-      console.log(rows);
-    }
-  )
- 
-})
-
 //post insert쿼리문을 사용해서 db에 각 데이터를 보낸다.
 app.post('/api/customers', (req, res) => {
 
@@ -82,10 +66,11 @@ app.post('/api/customers', (req, res) => {
 
 
 //delete
-app.delete('/api/customers/:id' , (req, res) => {
+app.patch('/api/customers/' , (req, res) => {
   const sql = 'DELETE FROM CUSTOMER WHERE id = ?';
-  const params = [req.params.id];
-
+  const id = req.body.id;
+  const params = [id];
+  console.log(params, "delete");
   connection.query(sql, params,
     (err, rows, fields) => {
       res.send(rows);
@@ -96,9 +81,9 @@ app.delete('/api/customers/:id' , (req, res) => {
 
 });
 
-
-app.post('/api/customers/:id' , (req, res) => {
-  const sql = 'UPDATE management.CUSTOMER SET NAME = ?, birthday = ?, gender = ?, job = ?, createdDate = now(), isDeleted = 0 WHERE id = ?';
+//update
+app.put('/api/customers/' , (req, res) => {
+  const sql = 'UPDATE CUSTOMER SET NAME = ?, birthday = ?, gender = ?, job = ?, createdDate = now(), isDeleted = 0 WHERE id = ?';
   
   const name = req.body.NAME;
 
@@ -108,10 +93,7 @@ app.post('/api/customers/:id' , (req, res) => {
 
   const job = req.body.job;
 
-  const id = req.params.id;
-
-
-
+  const id = req.body.id;
 
   const params = [ name, birthday, gender, job, id ];
 

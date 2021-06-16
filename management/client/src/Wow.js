@@ -17,6 +17,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CustomerAddF from './components/CustomerAddF';
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -100,17 +101,23 @@ const styles = theme => ({
 
 function Wow(props) {
 
+    //
     const [user, setUser] = useState({
-        customers: ''
+        customers: '',
+        searchKeyword: ''
     })
 
-    const callApi = async () => {
-        // axios 써보기
-        const response = await fetch('/api/customers');
-        const body = await response.json();
-        return body;
-    }
+    //axios
+    const callApi = () => {
 
+        axios.get('/api/customers')
+            .then(response => {
+                setUser({ customers: response.data })
+                console.log(response)
+            }, error => {
+                console.log(error);
+            })
+    }
 
     const stateRefresh = () => {
         setUser({
@@ -118,17 +125,20 @@ function Wow(props) {
         });
 
         callApi()
-            .then(res => setUser({ customers: res }))
-            .catch(err => console.log(err));
 
     }
 
-    //async가 있어야 await 사용가능
     useEffect(() => {
         callApi()
-            .then(res => setUser({ customers: res }))
-            .catch(err => console.log(err));
     }, [])
+
+    const handleValueChange = (e) => {
+        const value = e.target.value.toLowerCase();
+        const result = [];
+
+            console.log(value);
+
+    }
 
     const { classes } = props;
     const cellList = ["번호", "이름", "생년월일", "성별", "직업", "설정"];
@@ -148,7 +158,25 @@ function Wow(props) {
                     </Typography>
 
                     <div className={classes.grow} />
-                   
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
+
+
+                        </div>
+                        <InputBase
+                            placeholder="검색하기"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+
+                            name="searchKeyword"
+                            value={user.searchKeyword}
+                            onChange={handleValueChange}
+                        />
+                    </div>
+
                 </Toolbar>
             </AppBar>
 
