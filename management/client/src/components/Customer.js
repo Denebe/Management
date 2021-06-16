@@ -41,7 +41,7 @@ function Customer(props) {
             </Td>
             
             <Td>
-                <CustomerUpdate stateRefresh={props.stateRefresh} id={props.id} name={props.name} birthday={props.birthday} gender={props.gender} job={props.job} />
+                <CustomerUpdate stateRefresh={props.stateRefresh} id={props.id} name={props.name} birthday={props.birthday} gender={props.gender} name={props.name} job={props.job} />
             </Td>
             
         </Tr>

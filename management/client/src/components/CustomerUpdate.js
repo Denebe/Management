@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { upApi } from '../api/config';
 
 function CustomerUpdate(props) {
 
@@ -23,8 +24,8 @@ function CustomerUpdate(props) {
         //event를 인자로 받고 이벤트의 기본동작은 하지않고, this.addcustomer()이 수행된다.
         e.preventDefault()
 
-        //addCustomer함수호출
-        updateCustomer()
+        //config.js에서 upapi 호출
+        upApi(props, info.userName, info.birthday, info.gender, info.job);
 
         setOpen(false);
         //새로고침
@@ -32,26 +33,7 @@ function CustomerUpdate(props) {
         //window.location.reload();
     }
 
-    const updateCustomer = () => {
-        
-
-        //axios.post 구성 url, data
-        const url = '/api/customers/';
-
-        const data = {
-            id: props.id,
-            NAME: info.userName,
-            birthday: info.birthday,
-            gender: info.gender,
-            job: info.job
-        }
-        console.log(data);
-
-        return axios.put(url, data)
-
-        
-    }
-
+    
     const handleValueChange = e => {
 
         //state with multiple keys https://medium.com/@shlee1353/%EB%A6%AC%EC%95%A1%ED%8A%B8-hooks-usestate-4%EA%B0%80%EC%A7%80-%EC%83%81%EC%9A%A9%EB%B0%A9%EB%B2%95-dfe8b2096750

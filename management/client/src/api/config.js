@@ -1,6 +1,7 @@
 import axios from "axios"
 
-export const callApi = () => {
+export const callApi = (setUser) => {
+
     axios.get('/api/customers')
         .then(response => {
             setUser({ customers: response.data })
@@ -10,30 +11,31 @@ export const callApi = () => {
         })
 }
 
-export const delApi = () => {
+export const delApi = (props) => {
+
+
     const url = '/api/customers/';
 
         const data = {
              id : props.id
             }
-        window.location.reload();
 
         return axios.patch(url , data)
 }
 
-export const upApi = () => {
+export const upApi = (props, user, birthday, gender, job) => {
+
       //axios.post 구성 url, data
-      const url = '/api/customers/';
+      const url = '/api/customers/'; 
 
       const data = {
           id: props.id,
-          NAME: info.userName,
-          birthday: info.birthday,
-          gender: info.gender,
-          job: info.job
+          NAME: user,
+          birthday: birthday,
+          gender: gender,
+          job: job
       }
       console.log(data);
-      window.location.reload();
 
       return axios.put(url, data)
 }
