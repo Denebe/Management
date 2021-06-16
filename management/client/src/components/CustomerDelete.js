@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -6,61 +6,50 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 
-class CustomerDelete extends React.Component {
+function CustomerDelete(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false
-        }
+    const [open, setOpen] = useState(false);
 
-        this.handleClickOpen = this.handleClickOpen.bind(this)
-        this.handleClose = this.handleClose.bind(this)
-    }
-    
-    handleClickOpen() {
-        this.setState({
-            open: true
-        });
+    const handleClickOpen = () => {
+
+        setOpen(true);
     }
 
-    handleClose() {
-        this.setState({
-            open: false
-        })
+    const handleClose = () => {
+        
+        setOpen(false);
     }
-    
-    deleteCustomer(id) {
+
+    const deleteCustomer = (id) => {
         const url = '/api/customers/' + id;
         fetch(url, {
             method: 'DELETE'
         });
-        this.props.stateRefresh();
+        props.stateRefresh();
     }
 
-    render() {
-        return (
-            <div>
-                <Button variant= "contained" color= "secondary" onClick={this.handleClickOpen}>
-                    삭제
+    return (
+        <div>
+            <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+                삭제
                 </Button>
-                <Dialog onClose={this.handleClose} open={this.state.open}>
-                    <DialogTitle onClose={this.handleClose}>
-                        삭제 경고
+            <Dialog onClose={handleClose} open={open}>
+                <DialogTitle onClose={handleClose}>
+                    삭제 경고
                     </DialogTitle>
-                    <DialogContent>
-                        <Typography gutterBottom>
-                            선택한 고객 정보가 삭제됩니다.
+                <DialogContent>
+                    <Typography gutterBottom>
+                        선택한 고객 정보가 삭제됩니다.
                         </Typography>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="contained" color="primary" onClick={(e) => {this.deleteCustomer(this.props.id)}}>삭제</Button>
-                        <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
-                    </DialogActions>
-                </Dialog>  
-            </div>
-        )
-    }
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="primary" onClick={(e) => { deleteCustomer(props.id) }}>삭제</Button>
+                    <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    )
+
 }
 
 export default CustomerDelete;

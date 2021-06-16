@@ -29,7 +29,8 @@ class CustomerAdd extends React.Component {
             userName: '',
             birthday: '',
             gender: '',
-            job: ''
+            job: '',
+            open: false
         }
 
         //콜백에서 this가 작동하려면 아래와 같이 바인딩(this를 고정시킬때 사용하는 방법)을 해줘야한다.

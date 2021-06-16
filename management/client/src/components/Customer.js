@@ -16,35 +16,33 @@ const Td = styled.td`
 `;
 
 
-class Customer extends React.Component {
+function Customer(props) {
 
-    render() {
+    return (
 
-        return (
+        <Tr>
+            <Td>
+                {props.id}
+            </Td>
+            <Td>
+                {props.name}
+            </Td>
+            <Td>
+                {props.birthday}
+            </Td>
+            <Td>
+                {props.gender}
+            </Td>
+            <Td>
+                {props.job}
+            </Td>
+            <Td>
+                <CustomerDelete stateRefresh={props.stateRefresh} id={props.id} />
+            </Td>
+        </Tr>
 
-            <Tr>
-                <Td>
-                    {this.props.id}
-                </Td>
-                <Td>
-                    {this.props.name}
-                </Td>
-                <Td>
-                    {this.props.birthday}
-                </Td>
-                <Td>
-                    {this.props.gender}
-                </Td>
-                <Td>
-                    {this.props.job}
-                </Td>
-                <Td>
-                    <CustomerDelete stateRefresh={this.props.stateRefresh} id={this.props.id} />
-                </Td>
-            </Tr>
+    )
 
-        )
-    }
 }
 
 

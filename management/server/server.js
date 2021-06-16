@@ -30,7 +30,7 @@ connection.connect();
 //Select 쿼리문을 사용해서 isdeleted컬럼이 0인것을 불러온다.
 app.get('/api/customers', (req, res) => {
   connection.query(
-    'SELECT * FROM CUSTOMER WHERE isDeleted = 0',
+    'SELECT * FROM CUSTOMER',
     (err, rows, fields) => {
       res.send(rows);
     }
@@ -60,8 +60,10 @@ app.post('/api/customers', (req, res) => {
       })
 });
 
+
+//delete
 app.delete('/api/customers/:id' , (req, res) => {
-  const sql = 'UPDATE CUSTOMER SET isDeleted = 1 WHERE id = ?';
+  const sql = 'DELETE FROM CUSTOMER WHERE id = ?';
   const params = [req.params.id];
 
   connection.query(sql, params,
@@ -69,7 +71,11 @@ app.delete('/api/customers/:id' , (req, res) => {
       res.send(rows);
     }
   )
+
+  
+
 });
+
 
 
 

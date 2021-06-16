@@ -191,7 +191,7 @@ class App extends Component {
       <div className={classes.root}>
 
 
-        <AppBar>
+        <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />

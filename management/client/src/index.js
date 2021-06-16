@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Wow from './Wow';
+
 
 const theme = createMuiTheme({
   typography: {
@@ -13,8 +15,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <App />
+    <Wow />
   </MuiThemeProvider>,
   document.getElementById('root')
 );
-
