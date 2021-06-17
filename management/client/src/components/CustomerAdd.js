@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import { addApi } from '../api/Api';
 
 
 const styles = theme => ({
@@ -35,7 +36,7 @@ function CustomerAdd(props) {
         e.preventDefault()
 
         //addCustomer함수호출
-        addCustomer()
+        addApi(info.userName, info.birthday, info.gender, info.job)
 
         setInfo({
             userName: '',
@@ -59,23 +60,6 @@ function CustomerAdd(props) {
             [e.target.name] : e.target.value
         });
            
-    }
-
-
-    const addCustomer = () => {
-        console.log(info.userName);
-
-        //axios.post 구성 url, data
-        const url = '/api/customers';
-
-        const data = {
-            NAME: info.userName,
-            birthday: info.birthday,
-            gender: info.gender,
-            job: info.job
-        }
-
-        return axios.post(url, data)
     }
 
     const handleClickOpen = () => {

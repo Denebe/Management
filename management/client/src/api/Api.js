@@ -39,3 +39,16 @@ export const upApi = (props, user, birthday, gender, job) => {
 
       return axios.put(url, data)
 }
+
+export const addApi = (name, birthday, gender, job) => {
+    const url = '/api/customers';
+
+    const data = {
+        NAME: name,
+        birthday: birthday,
+        gender: gender,
+        job: job
+    }
+
+    return axios.post(url, data)
+}

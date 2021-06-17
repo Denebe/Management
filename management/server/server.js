@@ -35,6 +35,8 @@ app.get('/api/customers', (req, res) => {
       res.send(rows);
     }
   )
+
+
 })
 
 //post insert쿼리문을 사용해서 db에 각 데이터를 보낸다.
@@ -66,6 +68,7 @@ app.post('/api/customers', (req, res) => {
 
 
 //delete
+//부분교체 https://papababo.tistory.com/entry/HTTP-METHOD-PUT-vs-PATCH-%EC%B0%A8%EC%9D%B4%EC%A0%90
 app.patch('/api/customers/' , (req, res) => {
   const sql = 'DELETE FROM CUSTOMER WHERE id = ?';
   const id = req.body.id;
@@ -82,6 +85,7 @@ app.patch('/api/customers/' , (req, res) => {
 });
 
 //update
+//전체교체 https://papababo.tistory.com/entry/HTTP-METHOD-PUT-vs-PATCH-%EC%B0%A8%EC%9D%B4%EC%A0%90
 app.put('/api/customers/' , (req, res) => {
   const sql = 'UPDATE CUSTOMER SET NAME = ?, birthday = ?, gender = ?, job = ?, createdDate = now(), isDeleted = 0 WHERE id = ?';
   

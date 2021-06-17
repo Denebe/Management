@@ -5,8 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
-import { upApi } from '../api/config';
+import { upApi } from '../api/Api';
 
 function CustomerUpdate(props) {
 
@@ -33,28 +32,28 @@ function CustomerUpdate(props) {
         //window.location.reload();
     }
 
-    
-    const handleValueChange = e => {
+
+    const handleValueChange = (e) => {
 
         //state with multiple keys https://medium.com/@shlee1353/%EB%A6%AC%EC%95%A1%ED%8A%B8-hooks-usestate-4%EA%B0%80%EC%A7%80-%EC%83%81%EC%9A%A9%EB%B0%A9%EB%B2%95-dfe8b2096750
         setInfo({
             ...info,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         });
-           
+
     }
 
     const handleClickOpen = () => {
 
         console.log(props.id);
-      
-                setInfo({
-                    userName: props.name,
-                    birthday: props.birthday,
-                    gender: props.gender,
-                    job: props.job
-                })
-            
+
+        setInfo({
+            userName: props.name,
+            birthday: props.birthday,
+            gender: props.gender,
+            job: props.job
+        })
+
 
         setOpen(true);
     }

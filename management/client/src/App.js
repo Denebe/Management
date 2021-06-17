@@ -16,7 +16,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CustomerAdd from './components/CustomerAdd';
-import { callApi } from './api/config';
+import { callApi } from './api/Api';
+import TablePagination from '@material-ui/core/TablePagination';
 
 
 const styles = theme => ({
@@ -31,6 +32,8 @@ const styles = theme => ({
         justifyContent: 'center'
     },
     paper: {
+        width: '100%',
+        marginBottom: theme.spacing(2),
         marginLeft: 18,
         marginRight: 18
     },
@@ -100,13 +103,17 @@ const styles = theme => ({
 
 function App(props) {
 
-    //
+
     const [user, setUser] = useState({
-        customers: '',
-        //searchKeyword: ''
+        customers: ''
     })
 
-    //axios
+    const [text, setText] = useState('');
+
+    const [page, setPage] = useState(0);
+
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
 
 
     const stateRefresh = () => {
@@ -115,20 +122,47 @@ function App(props) {
         });
 
         callApi(setUser)
+        setText('')
 
     }
 
     useEffect(() => {
+        console.log("useEffect")
         callApi(setUser)
     }, [])
 
     const handleValueChange = (e) => {
-        const value = e.target.value.toLowerCase();
-        const result = [];
 
-            console.log(value);
+        setText(e.target.value);
 
     }
+
+    const searchEvent = (data) => {
+
+        data = data.filter((c) => {
+            if (c.NAME.indexOf(text) === 0) {
+
+                return data;
+            }
+        });
+        console.log(data);
+
+        return data.map((info) => {
+            return <Customer stateRefresh={stateRefresh} key={info.id} id={info.id} name={info.NAME} birthday={info.birthday} gender={info.gender} job={info.job} />
+        });
+
+    }
+
+    //페이지늘리는거 만들기
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    }
+
 
     const { classes } = props;
     const cellList = ["번호", "이름", "생년월일", "성별", "직업", "설정"];
@@ -161,8 +195,8 @@ function App(props) {
                                 input: classes.inputInput,
                             }}
 
-                            name="searchKeyword"
-                            value={user.searchKeyword}
+                            name="text"
+                            value={text}
                             onChange={handleValueChange}
                         />
                     </div>
@@ -179,19 +213,24 @@ function App(props) {
                             })}
                         </TableRow>
                     </TableHead>
+                    
 
                     <TableBody>
-
-                        {user.customers ?
-                            user.customers.map(c => {
-
-                                return <Customer stateRefresh={stateRefresh} key={c.id} id={c.id} name={c.NAME} birthday={c.birthday} gender={c.gender} job={c.job} />
-
-                            }) : ''
+                        
+                        {
+                            user.customers ? searchEvent(user.customers) : ''
                         }
-
                     </TableBody>
                 </Table>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                    component="div"
+                    count={user.customers.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </Paper>
             <div className={classes.menu}>
                 <CustomerAdd stateRefresh={stateRefresh} />
