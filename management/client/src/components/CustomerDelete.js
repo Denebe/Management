@@ -15,7 +15,7 @@ function CustomerDelete(props) {
         //event를 인자로 받고 이벤트의 기본동작은 하지않고, this.addcustomer()이 수행된다.
         e.preventDefault()
 
-        //config.js에서 delApi호출
+        //api.js에 delApi에 props 전달
         delApi(props);
 
         setOpen(false);

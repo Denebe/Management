@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -35,7 +33,7 @@ function CustomerAdd(props) {
         //event를 인자로 받고 이벤트의 기본동작은 하지않고, this.addcustomer()이 수행된다.
         e.preventDefault()
 
-        //addCustomer함수호출
+        //addApi에 info값 전달
         addApi(info.userName, info.birthday, info.gender, info.job)
 
         setInfo({
@@ -51,7 +49,7 @@ function CustomerAdd(props) {
         //window.location.reload();
     }
 
-    //
+    //textfield에 값들을 info값들에 맞게 저장?
     const handleValueChange = e => {
 
         //state with multiple keys https://medium.com/@shlee1353/%EB%A6%AC%EC%95%A1%ED%8A%B8-hooks-usestate-4%EA%B0%80%EC%A7%80-%EC%83%81%EC%9A%A9%EB%B0%A9%EB%B2%95-dfe8b2096750
@@ -62,6 +60,7 @@ function CustomerAdd(props) {
            
     }
 
+    //dialog오픈
     const handleClickOpen = () => {
         setOpen(true);
     }
@@ -76,7 +75,6 @@ function CustomerAdd(props) {
         setOpen(false);
     }
 
-    //클래스 컴포넌트에서 반드시 구현돼야하는 메서드
     
         return (
 

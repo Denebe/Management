@@ -15,7 +15,7 @@ const Td = styled.td`
     padding: 12px 15px;
 `;
 
-
+// table에 뿌려주기
 function Customer(props) {
 
     return (
@@ -41,7 +41,7 @@ function Customer(props) {
             </Td>
             
             <Td>
-                <CustomerUpdate stateRefresh={props.stateRefresh} id={props.id} name={props.name} birthday={props.birthday} gender={props.gender} name={props.name} job={props.job} />
+                <CustomerUpdate stateRefresh={props.stateRefresh} id={props.id} name={props.name} birthday={props.birthday} gender={props.gender} job={props.job} />
             </Td>
             
         </Tr>

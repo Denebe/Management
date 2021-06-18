@@ -17,19 +17,27 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CustomerAdd from './components/CustomerAdd';
 import { callApi } from './api/Api';
-import TablePagination from '@material-ui/core/TablePagination';
+import Paging from './components/Paging';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import styled from 'styled-components';
 
+
+const Menu = styled.div`
+        
+    margin-Top: 15px;
+    margin-Bottom: 15px;
+    display: flex;
+    justify-Content: center;
+`
 
 const styles = theme => ({
     root: {
         width: "100%",
-        minWidth: 1080
-    },
-    menu: {
-        marginTop: 15,
-        marginBottom: 15,
-        display: 'flex',
-        justifyContent: 'center'
+
+        marginTop: theme.spacing.unit * 3,
+
+        overflowX: "auto"
+
     },
     paper: {
         width: '100%',
@@ -38,6 +46,7 @@ const styles = theme => ({
         marginRight: 18
     },
     progress: {
+
         margin: theme.spacing.unit * 2
     },
     grow: {
@@ -110,12 +119,8 @@ function App(props) {
 
     const [text, setText] = useState('');
 
-    const [page, setPage] = useState(0);
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-
-
-
+    //새로고침
     const stateRefresh = () => {
         setUser({
             customers: ''
@@ -129,15 +134,19 @@ function App(props) {
     useEffect(() => {
         console.log("useEffect")
         callApi(setUser)
+
     }, [])
 
+    //input Event
     const handleValueChange = (e) => {
 
         setText(e.target.value);
 
     }
 
+    //user.customer를 data로 받아온다음, input안에 text와 비교 그리고 map함수 호출
     const searchEvent = (data) => {
+
 
         data = data.filter((c) => {
             if (c.NAME.indexOf(text) === 0) {
@@ -145,24 +154,15 @@ function App(props) {
                 return data;
             }
         });
-        console.log(data);
+        //console.log(data);
 
         return data.map((info) => {
-            return <Customer stateRefresh={stateRefresh} key={info.id} id={info.id} name={info.NAME} birthday={info.birthday} gender={info.gender} job={info.job} />
+            return (
+                <Customer stateRefresh={stateRefresh} key={info.id} id={info.id} name={info.NAME} birthday={info.birthday} gender={info.gender} job={info.job} />
+            )
         });
 
     }
-
-    //페이지늘리는거 만들기
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    }
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    }
-
 
     const { classes } = props;
     const cellList = ["번호", "이름", "생년월일", "성별", "직업", "설정"];
@@ -213,28 +213,26 @@ function App(props) {
                             })}
                         </TableRow>
                     </TableHead>
-                    
+
 
                     <TableBody>
-                        
+
                         {
-                            user.customers ? searchEvent(user.customers) : ''
+                            user.customers ? searchEvent(user.customers) :
+
+                                <TableCell colSpan="6" align="center">
+                                    <CircularProgress className={classes.progress} />
+                                </TableCell>
                         }
                     </TableBody>
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    component="div"
-                    count={user.customers.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+
+                <Paging />
+
             </Paper>
-            <div className={classes.menu}>
+            <Menu>
                 <CustomerAdd stateRefresh={stateRefresh} />
-            </div>
+            </Menu>
         </div>
     );
 

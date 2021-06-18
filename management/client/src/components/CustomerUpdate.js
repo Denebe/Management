@@ -23,7 +23,7 @@ function CustomerUpdate(props) {
         //event를 인자로 받고 이벤트의 기본동작은 하지않고, this.addcustomer()이 수행된다.
         e.preventDefault()
 
-        //config.js에서 upapi 호출
+        //api.js에서 upApi에 props와 info값 전달
         upApi(props, info.userName, info.birthday, info.gender, info.job);
 
         setOpen(false);
