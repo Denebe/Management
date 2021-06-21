@@ -17,10 +17,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CustomerAdd from './components/CustomerAdd';
 import { callApi } from './api/Api';
-import Paging from './components/Paging';
+import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
-
 
 const Menu = styled.div`
         
@@ -109,7 +108,6 @@ const styles = theme => ({
 });
 
 
-
 function App(props) {
 
 
@@ -120,7 +118,10 @@ function App(props) {
     const [text, setText] = useState('');
 
 
-    //새로고침
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
+      //새로고침
     const stateRefresh = () => {
         setUser({
             customers: ''
@@ -156,85 +157,109 @@ function App(props) {
         });
         //console.log(data);
 
-        return data.map((info) => {
-            return (
-                <Customer stateRefresh={stateRefresh} key={info.id} id={info.id} name={info.NAME} birthday={info.birthday} gender={info.gender} job={info.job} />
-            )
-        });
+        //https://material-ui.com/components/tables/
+        //다음주에 와서 확인
 
-    }
+        //data.slice(시작점, 끝 ex) array (0~4)까지 )
+        return (data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((info) => 
+            
+            <Customer stateRefresh={stateRefresh} key={info.id} id={info.id} name={info.NAME} birthday={info.birthday} gender={info.gender} job={info.job} />
+           
+            ))
 
-    const { classes } = props;
-    const cellList = ["번호", "이름", "생년월일", "성별", "직업", "설정"];
+}
 
-    return (
-        <div className={classes.root}>
+const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    console.log(newPage)
+}
 
+const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    console.log(event.target.value);
+    console.log(typeof(event.target.value))
+    setPage(0);
+}
 
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                        <MenuIcon />
-                    </IconButton>
+const { classes } = props;
+const cellList = ["번호", "이름", "생년월일", "성별", "직업", "삭제", "수정"];
 
-                    <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                        고객 관리 시스템
-                    </Typography>
-
-                    <div className={classes.grow} />
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+return (
+    <div className={classes.root}>
 
 
-                        </div>
-                        <InputBase
-                            placeholder="검색하기"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                    <MenuIcon />
+                </IconButton>
 
-                            name="text"
-                            value={text}
-                            onChange={handleValueChange}
-                        />
+                <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                    고객 관리 시스템
+                </Typography>
+
+                <div className={classes.grow} />
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                        <SearchIcon />
+
+
                     </div>
+                    <InputBase
+                        placeholder="검색하기"
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
 
-                </Toolbar>
-            </AppBar>
+                        name="text"
+                        value={text}
+                        onChange={handleValueChange}
+                    />
+                </div>
 
-            <Paper className={classes.root}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            {cellList.map(c => {
-                                return <TableCell className={classes.tableHead}>{c}</TableCell>
-                            })}
-                        </TableRow>
-                    </TableHead>
+            </Toolbar>
+        </AppBar>
+
+        <Paper className={classes.root}>
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                        {cellList.map(c => {
+                            return <TableCell className={classes.tableHead}>{c}</TableCell>
+                        })}
+                    </TableRow>
+                </TableHead>
 
 
-                    <TableBody>
+                <TableBody>
 
-                        {
-                            user.customers ? searchEvent(user.customers) :
+                    {
+                        user.customers ? searchEvent(user.customers) :
 
-                                <TableCell colSpan="6" align="center">
-                                    <CircularProgress className={classes.progress} />
-                                </TableCell>
-                        }
-                    </TableBody>
-                </Table>
+                            <TableCell colSpan="6" align="center">
+                                <CircularProgress className={classes.progress} />
+                            </TableCell>
+                    }
+                </TableBody>
+            </Table>
 
-                <Paging />
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={user.customers.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
 
-            </Paper>
-            <Menu>
-                <CustomerAdd stateRefresh={stateRefresh} />
-            </Menu>
-        </div>
-    );
+        </Paper>
+        <Menu>
+            <CustomerAdd stateRefresh={stateRefresh} />
+        </Menu>
+    </div>
+);
 
 }
 
